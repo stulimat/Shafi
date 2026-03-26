@@ -1,0 +1,585 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>شافي — خدماتنا | Shafi — Our Services</title>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@300;400;500;600;700&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --teal: #00a8cd;
+    --teal-dark: #0095b7;
+    --teal-hover: #00bde0;
+    --navy: #264a6c;
+    --navy-light: #2e5a80;
+    --teal-bg: #F0FAFB;
+    --cream: #FAFBFC;
+    --text: #1A1A1A;
+    --muted: #5A6B7A;
+    --border: #E0E8EE;
+    --white: #FFFFFF;
+    --gold: #D4A84B;
+    --gold-bg: #FDF8EF;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'IBM Plex Sans Arabic', 'DM Sans', sans-serif;
+    background: var(--cream);
+    color: var(--text);
+    line-height: 1.8;
+    direction: rtl;
+  }
+
+  body.en {
+    direction: ltr;
+    font-family: 'DM Sans', 'IBM Plex Sans Arabic', sans-serif;
+    line-height: 1.6;
+  }
+
+  .page { max-width: 1000px; margin: 0 auto; padding: 40px 24px; }
+
+  /* Lang toggle */
+  .lang-bar { display: flex; justify-content: flex-start; margin-bottom: 20px; gap: 4px; }
+  body.en .lang-bar { justify-content: flex-end; }
+  .lang-btn {
+    padding: 5px 14px; font-size: 12px; font-weight: 600;
+    border: 2px solid var(--border); background: var(--white); color: var(--muted);
+    cursor: pointer; transition: all 0.2s; font-family: 'DM Sans', sans-serif;
+  }
+  .lang-btn:first-child { border-radius: 8px 0 0 8px; }
+  .lang-btn:last-child { border-radius: 0 8px 8px 0; }
+  body.ar .lang-btn:first-child { border-radius: 0 8px 8px 0; }
+  body.ar .lang-btn:last-child { border-radius: 8px 0 0 8px; }
+  .lang-btn.active { background: var(--navy); color: var(--white); border-color: var(--navy); }
+
+  /* Logo - always on the left regardless of language direction */
+  .logo-bar { display: flex; align-items: center; margin-bottom: 48px; direction: ltr; }
+  .logo-bar img { height: 72px; width: auto; }
+
+  /* Hero */
+  .hero-text {
+    font-size: 36px; font-weight: 700; color: var(--navy);
+    line-height: 1.3; margin-bottom: 16px;
+  }
+  body.ar .hero-text { line-height: 1.5; }
+  .hero-sub {
+    font-size: 18px; color: var(--muted); margin-bottom: 48px; max-width: 680px;
+  }
+  body.ar .hero-sub { line-height: 1.9; }
+
+  /* Cards grid */
+  .cards {
+    display: grid; grid-template-columns: 1fr 1fr 1fr;
+    gap: 20px; margin-bottom: 24px;
+  }
+  @media (max-width: 820px) {
+    .cards { grid-template-columns: 1fr; }
+  }
+
+  .card {
+    background: var(--white); border-radius: 16px; padding: 30px 26px;
+    border: 2px solid var(--border); transition: border-color 0.25s, box-shadow 0.25s;
+    display: flex; flex-direction: column;
+  }
+  .card:hover { border-color: var(--teal); box-shadow: 0 4px 20px rgba(0,168,205,0.08); }
+  .card.featured {
+    border-color: var(--teal); background: linear-gradient(175deg, var(--white) 55%, var(--teal-bg) 100%);
+  }
+  .card.premium {
+    border-color: var(--navy); background: linear-gradient(175deg, var(--white) 55%, #F0F2F5 100%);
+  }
+
+  .card-badge {
+    display: inline-block; color: white;
+    font-size: 11px; font-weight: 600; padding: 5px 14px;
+    border-radius: 20px; margin-bottom: 18px; letter-spacing: 0.5px; align-self: flex-start;
+  }
+  body.en .card-badge { text-transform: uppercase; letter-spacing: 1px; }
+  .badge-teal { background: var(--teal); }
+  .badge-navy { background: var(--navy); }
+  .badge-gold { background: var(--gold); }
+
+  .card-price {
+    font-size: 44px; font-weight: 700; color: var(--navy);
+    margin-bottom: 4px; letter-spacing: -1px;
+  }
+  body.ar .card-price { direction: ltr; text-align: right; }
+  .card-price span { font-size: 15px; font-weight: 400; color: var(--muted); letter-spacing: 0; }
+
+  .card-title { font-size: 20px; font-weight: 600; color: var(--navy); margin-bottom: 10px; }
+  .card-desc {
+    font-size: 14px; color: var(--muted); margin-bottom: 20px; line-height: 1.7;
+  }
+  body.ar .card-desc { line-height: 1.9; }
+
+  .card-list { list-style: none; margin-bottom: 24px; flex-grow: 1; }
+  .card-list li {
+    font-size: 13px; color: var(--text); padding: 6px 0;
+    position: relative; line-height: 1.6;
+  }
+  body.en .card-list li { padding-left: 24px; }
+  body.ar .card-list li { padding-right: 24px; }
+  body.en .card-list li::before { content: "✓"; position: absolute; left: 0; color: var(--teal); font-weight: 700; }
+  body.ar .card-list li::before { content: "✓"; position: absolute; right: 0; color: var(--teal); font-weight: 700; }
+
+  .card-btn {
+    display: block; width: 100%; padding: 14px; border: none; border-radius: 10px;
+    font-size: 15px; font-weight: 600; cursor: pointer; text-align: center;
+    text-decoration: none; font-family: inherit;
+    transition: transform 0.15s, box-shadow 0.15s, background 0.2s;
+  }
+  .card-btn:hover { transform: translateY(-2px); box-shadow: 0 6px 16px rgba(0,0,0,0.12); }
+  .btn-teal { background: var(--teal); color: white; }
+  .btn-teal:hover { background: var(--teal-hover); }
+  .btn-navy { background: var(--navy); color: white; }
+  .btn-navy:hover { background: var(--navy-light); }
+  .btn-gold { background: var(--gold); color: white; }
+  .btn-gold:hover { background: #C49B40; }
+
+  /* Credit note */
+  .credit-note {
+    text-align: center; padding: 20px 24px; background: var(--teal-bg);
+    border-radius: 12px; font-size: 15px; color: var(--navy); margin-bottom: 24px;
+  }
+  .credit-note strong { font-weight: 600; }
+
+  /* Not sure */
+  .not-sure {
+    text-align: center; padding: 18px; background: var(--white);
+    border-radius: 12px; font-size: 14px; color: var(--muted);
+    border: 1px solid var(--border);
+  }
+  .not-sure strong { font-weight: 600; color: var(--navy); }
+
+  /* Trust row */
+  .trust-row {
+    display: flex; gap: 28px; margin-top: 36px; padding-top: 28px;
+    border-top: 1px solid var(--border); flex-wrap: wrap; justify-content: center;
+  }
+  .trust-item { font-size: 13px; color: var(--muted); display: flex; align-items: center; gap: 8px; font-weight: 500; }
+  .trust-icon { font-size: 18px; }
+
+  /* How it works */
+  .section-title { font-size: 26px; font-weight: 700; color: var(--navy); margin-top: 56px; margin-bottom: 10px; }
+  .section-sub { font-size: 16px; color: var(--muted); margin-bottom: 32px; }
+
+  .steps-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; margin-bottom: 48px; }
+  @media (max-width: 640px) { .steps-grid { grid-template-columns: 1fr; } }
+
+  .step-card {
+    background: var(--white); border-radius: 14px; padding: 28px 22px;
+    border: 1px solid var(--border); text-align: center; transition: box-shadow 0.2s;
+  }
+  .step-card:hover { box-shadow: 0 4px 16px rgba(0,0,0,0.06); }
+  .step-num {
+    width: 40px; height: 40px; background: var(--teal); color: white;
+    border-radius: 50%; display: flex; align-items: center; justify-content: center;
+    font-weight: 700; font-size: 16px; margin: 0 auto 14px; font-family: 'DM Sans', sans-serif;
+  }
+  .step-card h3 { font-size: 16px; font-weight: 600; color: var(--navy); margin-bottom: 10px; }
+  .step-card p { font-size: 14px; color: var(--muted); line-height: 1.7; }
+  body.ar .step-card p { line-height: 1.9; }
+
+  /* FAQ */
+  .faq-item {
+    background: var(--white); border-radius: 12px; padding: 22px 26px;
+    margin-bottom: 12px; border: 1px solid var(--border); transition: box-shadow 0.2s;
+  }
+  .faq-item:hover { box-shadow: 0 2px 12px rgba(0,0,0,0.04); }
+  .faq-q { font-size: 16px; font-weight: 600; color: var(--navy); margin-bottom: 8px; }
+  .faq-a { font-size: 14px; color: var(--muted); line-height: 1.8; }
+
+  /* CTA */
+  .cta-box {
+    background: linear-gradient(135deg, var(--navy) 0%, var(--teal-dark) 100%);
+    border-radius: 18px; padding: 48px 36px; text-align: center; margin-top: 56px;
+  }
+  .cta-box h2 { font-size: 26px; font-weight: 700; color: white; margin-bottom: 14px; }
+  .cta-box p {
+    font-size: 16px; color: rgba(255,255,255,0.85); margin-bottom: 28px;
+    line-height: 1.8; max-width: 500px; margin-left: auto; margin-right: auto;
+  }
+  .cta-btn {
+    display: inline-block; background: white; color: var(--navy);
+    font-size: 17px; font-weight: 600; padding: 16px 44px;
+    border-radius: 12px; text-decoration: none; font-family: inherit;
+    transition: transform 0.15s, box-shadow 0.15s;
+  }
+  .cta-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,0,0,0.2); }
+
+  /* WhatsApp */
+  /* Talk to us CTA */
+  .talk-cta {
+    text-align: center;
+    margin-top: 32px;
+    margin-bottom: 8px;
+  }
+  .talk-cta-btn {
+    display: inline-block;
+    padding: 18px 48px;
+    font-size: 18px;
+    font-weight: 700;
+    border-radius: 12px;
+    text-decoration: none;
+    font-family: inherit;
+    background: var(--navy);
+    color: white;
+    transition: transform 0.15s, box-shadow 0.15s;
+  }
+  .talk-cta-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(38, 74, 108, 0.3);
+  }
+  .talk-cta-sub {
+    text-align: center;
+    font-size: 13px;
+    color: var(--muted);
+    margin-top: 10px;
+    margin-bottom: 32px;
+  }
+
+  .whatsapp-float {
+    position: fixed; bottom: 24px; z-index: 100;
+    background: #25D366; color: white; width: 56px; height: 56px;
+    border-radius: 50%; display: flex; align-items: center; justify-content: center;
+    font-size: 28px; text-decoration: none;
+    box-shadow: 0 4px 16px rgba(37,211,102,0.4); transition: transform 0.2s;
+  }
+  body.en .whatsapp-float { right: 24px; }
+  body.ar .whatsapp-float { left: 24px; }
+  .whatsapp-float:hover { transform: scale(1.1); }
+
+  .ar-content { display: block; }
+  .en-content { display: none; }
+  body.en .ar-content { display: none; }
+  body.en .en-content { display: block; }
+</style>
+</head>
+<body class="ar">
+<div class="page">
+
+  <div class="lang-bar">
+    <button class="lang-btn" onclick="setLang('en')">English</button>
+    <button class="lang-btn active" onclick="setLang('ar')">العربية</button>
+  </div>
+
+  <div class="logo-bar">
+      <img src="data:image/svg+xml;base64,PHN2ZyBpZD0iTGF5ZXJfMSIgZGF0YS1uYW1lPSJMYXllciAxIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyMDAwIDcxMC44MSI+CiAgPGRlZnM+CiAgICA8c3R5bGU+CiAgICAgIC5jbHMtMSB7CiAgICAgICAgZmlsbDogIzI2NGE2YzsKICAgICAgfQoKICAgICAgLmNscy0xLCAuY2xzLTIgewogICAgICAgIHN0cm9rZS13aWR0aDogMHB4OwogICAgICB9CgogICAgICAuY2xzLTIgewogICAgICAgIGZpbGw6ICMwMGE4Y2Q7CiAgICAgIH0KICAgIDwvc3R5bGU+CiAgPC9kZWZzPgogIDxwYXRoIGNsYXNzPSJjbHMtMiIgZD0iTTYwNy4xNCwzMjguNzljLTI1LjI2LTI1LjI2LTY2LjIxLTI1LjI2LTkxLjQ3LDBoMGMtMTIuNDksMTIuNDktMjkuNDMsMTkuNTEtNDcuMDksMTkuNTFoLTM3LjY4di05LjA2YzAtOS4wMiw3LjMxLTE2LjMzLDE2LjMzLTE2LjMzaDcuMDljMzUuNzIsMCw2NC42OC0yOC45Niw2NC42OC02NC42OHYtMzcuNjRoLTM3LjY0Yy0zNS43MiwwLTY0LjY4LDI4Ljk2LTY0LjY4LDY0LjY4djYzLjAyaC0yNS4wMnYtNzYuOTFjMC0xNy42Niw3LjAyLTM0LjYsMTkuNTEtNDcuMDloMGMyNS4yNi0yNS4yNiwyNS4yNi02Ni4yMSwwLTkxLjQ3bC0yNi42MS0yNi42MS0yNi42MSwyNi42MWMtMjUuMjYsMjUuMjYtMjUuMjYsNjYuMjEsMCw5MS40N2gwYzEyLjQ5LDEyLjQ5LDE5LjUxLDI5LjQzLDE5LjUxLDQ3LjA5djc2LjkxaC0yNS4wMnYtNjMuMDJjMC0zNS43Mi0yOC45Ni02NC42OC02NC42OC02NC42OGgtMzcuNjR2MzcuNjRjMCwzNS43MiwyOC45Niw2NC42OCw2NC42OCw2NC42OGg3LjA5YzkuMDIsMCwxNi4zMyw3LjMxLDE2LjMzLDE2LjMzdjkuMDZoLTM3LjY4Yy0xNy42NiwwLTM0LjYtNy4wMi00Ny4wOS0xOS41MWgwYy0yNS4yNi0yNS4yNi02Ni4yMS0yNS4yNi05MS40NywwbC0yNi42MSwyNi42MSwyNi42MSwyNi42MWMyNS4yNiwyNS4yNiw2Ni4yMSwyNS4yNiw5MS40NywwaDBjMTIuNDktMTIuNDksMjkuNDMtMTkuNTEsNDcuMDktMTkuNTFoMzcuNjh2OS4wNmMwLDkuMDItNy4zMSwxNi4zMy0xNi4zMywxNi4zM2gtNy4wOWMtMzUuNzIsMC02NC42OCwyOC45Ni02NC42OCw2NC42OHYzNy42NGgzNy42NGMzNS43MiwwLDY0LjY4LTI4Ljk2LDY0LjY4LTY0LjY4di02My4wMmgyNS4wMnY3Ni45MWMwLDE3LjY2LTcuMDIsMzQuNi0xOS41MSw0Ny4wOWgwYy0yNS4yNiwyNS4yNi0yNS4yNiw2Ni4yMSwwLDkxLjQ3bDI2LjYxLDI2LjYxLDI2LjYxLTI2LjYxYzI1LjI2LTI1LjI2LDI1LjI2LTY2LjIxLDAtOTEuNDdoMGMtMTIuNDktMTIuNDktMTkuNTEtMjkuNDMtMTkuNTEtNDcuMDl2LTc2LjkxaDI1LjAydjYzLjAyYzAsMzUuNzIsMjguOTYsNjQuNjgsNjQuNjgsNjQuNjhoMzcuNjR2LTM3LjY0YzAtMzUuNzItMjguOTYtNjQuNjgtNjQuNjgtNjQuNjhoLTcuMDljLTkuMDIsMC0xNi4zMy03LjMxLTE2LjMzLTE2LjMzdi05LjA2aDM3LjY4YzE3LjY2LDAsMzQuNiw3LjAyLDQ3LjA5LDE5LjUxaDBjMjUuMjYsMjUuMjYsNjYuMjEsMjUuMjYsOTEuNDcsMGwyNi42MS0yNi42MS0yNi42MS0yNi42MVoiLz4KICA8Zz4KICAgIDxwYXRoIGNsYXNzPSJjbHMtMSIgZD0iTTkwNS4xNSwyMzMuMjJsNS4wNiwyMi41LTIuODEuNTZjLTcuNTEtOS0xOS40MS0xNi4xOC0zNS43Mi0yMS41Mi0xNi4zMi01LjM1LTM0LjAzLTguMDItNTMuMTctOC4wMi0yOS4yNSwwLTUwLjI2LDMuNzYtNjMsMTEuMjUtMTIuNzYsNy41LTE5LjEzLDE2LjIzLTE5LjEzLDI2LjE2LDAsNy44NywzLjM4LDE0LjMsMTAuMTMsMTkuMjcsNi43NSw0Ljk3LDE1LjUxLDguNjMsMjYuMywxMC45NywxMC43OCwyLjM1LDIyLjY5LDQuMzYsMzUuNzIsNi4wNSwxMy4wMywxLjY5LDI2LjExLDMuNzYsMzkuMjQsNi4xOSwxMy4xMywyLjQ0LDI1LjA4LDUuNTgsMzUuODYsOS40MiwxMC43OCwzLjg0LDE5LjU1LDkuNzUsMjYuMywxNy43Miw2Ljc1LDcuOTcsMTAuMTMsMTcuNzcsMTAuMTMsMjkuMzksMCw5LjU2LTEuOTMsMTguMS01Ljc3LDI1LjYtMy44NSw3LjUtOS4xOSwxMy41NS0xNi4wMywxOC4xNC02Ljg1LDQuNi0xNC4wNyw4LjQ5LTIxLjY2LDExLjY4LTcuNTksMy4xOS0xNi4xNyw1LjQ4LTI1Ljc0LDYuODktOS41NywxLjQtMTcuOTYsMi4zOS0yNS4xOCwyLjk1LTcuMjIuNTYtMTQuNzcuODQtMjIuNjQuODQtMzYuOTUsMC02OS4yLTYuNjYtOTYuNzctMTkuOTdsLTcuODctMjcuNTcsMi44MS0uODRjNS44MSw5LjE5LDE5LjI3LDE3LjM0LDQwLjM3LDI0LjQ3LDIxLjA5LDcuMTMsNDEuNTgsMTAuNjksNjEuNDYsMTAuNjksMjkuMjUsMCw1MS44LTQuMjIsNjcuNjUtMTIuNjYsMTUuODQtOC40NCwyMy43Ny0xOS41LDIzLjc3LTMzLjE5LDAtOC40NC0zLjM4LTE1LjMzLTEwLjEzLTIwLjY4LTYuNzUtNS4zNC0xNS41Mi05LjIzLTI2LjMtMTEuNjctMTAuNzktMi40My0yMi42OS00LjU0LTM1LjcyLTYuMzMtMTMuMDMtMS43OC0yNi4xMS0zLjgtMzkuMjQtNi4wNS0xMy4xMy0yLjI1LTI1LjA4LTUuMjEtMzUuODYtOC44Ni0xMC43OS0zLjY1LTE5LjU1LTkuMzItMjYuMy0xNy4wMi02Ljc1LTcuNjgtMTAuMTMtMTcuMTYtMTAuMTMtMjguNDEsMC0zOC40NCwzNS45MS01Ny42NiwxMDcuNzMtNTcuNjYsMTguMzgsMCwzNS4zNSwxLjk3LDUwLjkxLDUuOTEsMTUuNTYsMy45NCwyNy40Nyw4LjU0LDM1LjcyLDEzLjc5WiIvPgogICAgPHBhdGggY2xhc3M9ImNscy0xIiBkPSJNMTIyNS41NCw0MjIuODFjLTEuNSwwLTQuMzYtLjE5LTguNTgtLjU2LTQuMjItLjM3LTcuNDYtLjU2LTkuNy0uNTZzLTUuNTQuMTktOS44NS41NmMtNC4zMi4zOC03LjEzLjU2LTguNDQuNTYsMS44OC0zMC4zOCwyLjkxLTYzLjE5LDMuMS05OC40NWgtMTkyLjY5YzAsMzIuMDcsMS4wMyw2NC44OSwzLjEsOTguNDUtMS41LDAtNC4zNi0uMTktOC41OC0uNTYtNC4yMi0uMzctNy40NS0uNTYtOS43MS0uNTZzLTUuNTMuMTktOS44NC41NmMtNC4zMS4zOC03LjEzLjU2LTguNDQuNTYsMi4wNi0zNC41LDMuMDktNjguNzMsMy4wOS0xMDIuNjcsMC0zOS41Ni0xLjAzLTcyLjk1LTMuMDktMTAwLjE0LDcuODcuNzUsMTMuOTcsMS4xMiwxOC4yOCwxLjEyLDMuOTQsMCwxMC4wMy0uMzcsMTguMjktMS4xMi0yLjA3LDI1LjUtMy4xLDU1LjIzLTMuMSw4OS4xN2gxOTIuNjljLS4xOS0yOS42My0xLjIyLTU5LjM1LTMuMS04OS4xNyw3Ljg4Ljc1LDEzLjk3LDEuMTIsMTguMjksMS4xMiwzLjk0LDAsMTAuMDItLjM3LDE4LjI4LTEuMTItMi4wNiwyNy4xOS0zLjEsNjAuNTgtMy4xLDEwMC4xNCwwLDMzLjk0LDEuMDQsNjguMTcsMy4xLDEwMi42N1oiLz4KICAgIDxwYXRoIGNsYXNzPSJjbHMtMSIgZD0iTTE0MDkuNzgsMjIwYzQuMzEsMCw3LjUuNTIsOS41NiwxLjU1LDIuMDYsMS4wMywzLjk0LDMuNTEsNS42Myw3LjQ1LDM4LjgyLDY2Ljk1LDc5LjA0LDEzMS41NSwxMjAuNjcsMTkzLjgxLTE0LjI2LS45NC0yOC41LS45NC00Mi43NSwwLTE1LjAxLTI3LjM4LTI2LjM2LTQ3LjkxLTM0LjA1LTYxLjZoLTE0OC41MWMtMTQuMDcsMjIuMzItMjYuNjMsNDIuODUtMzcuNjksNjEuNi0yLjYzLS41Ni02Ljg1LS44NC0xMi42Ni0uODRzLTEwLjAzLjI4LTEyLjY2Ljg0YzQ2LjE0LTY0Ljg4LDkwLjAyLTEyOS4xMSwxMzEuNjUtMTkyLjY4LTIuODEtNC4zMS04LjM0LTYuNzUtMTYuNi03LjMxdi0yLjgxYzEuODcsMCw1LjIxLjE0LDkuOTkuNDMsNC43OS4yOCw4LjExLjQyLDkuOTkuNDIsMi40MywwLDUuNzItLjE0LDkuODQtLjQyLDQuMTItLjI4LDYuNjUtLjQzLDcuNTktLjQzWk0xNDYwLjEzLDM0Ni4wMmMtMjAuODItMzYuMDEtNDEuODItNzAuNDItNjMuMDItMTAzLjI0LTIzLjYyLDM1LjQ0LTQ2LjAzLDY5Ljg2LTY3LjIyLDEwMy4yNGgxMzAuMjRaIi8+CiAgICA8cGF0aCBjbGFzcz0iY2xzLTEiIGQ9Ik0xNzg1LjMxLDIyMGMyLjI1LDAsMy42Ni45NCw0LjIyLDIuODFsMy45NCwxOS42OS0yLjUzLjU2Yy00LjEzLTUuNDQtMTcuMjYtOC4xNi0zOS4zOC04LjE2aC0xMzkuMjRjLS45NCwxNS4zOC0xLjQxLDQyLjU3LTEuNDEsODEuNTdoOTAuNTdjMjguNjksMCw0Ny4yNi0xLjAzLDU1LjctMy4wOS0uMzgsMi42My0uNTcsNi4xLS41NywxMC40MXMuMTksNy44Ny41NywxMC42OWMtNy43LTIuMDYtMjYuMjUtMy4wOS01NS43LTMuMDloLTkwLjU3YzAsMjguNTEsMS4wMyw1OC45OCwzLjEsOTEuNDItMS41LDAtNC4zNi0uMTktOC41OC0uNTYtNC4yMi0uMzctNy40Ni0uNTYtOS43MS0uNTYtMi40MywwLTUuODEuMTktMTAuMTIuNTYtNC4zMi4zOC03LjA0LjU2LTguMTYuNTYsMi4wNi0zNC41LDMuMS02OC43MywzLjEtMTAyLjY3LDAtMzkuNTYtMS4wNC03Mi45NS0zLjEtMTAwLjE0LDUuMjUsMCwxOS41NS4xOSw0Mi45LjU3LDIzLjM0LjM4LDQwLjY1LjU2LDUxLjkuNTYsOC45OSwwLDI1LjUtLjE0LDQ5LjUtLjQyLDI0LjAxLS4yOCw0NS4xOS0uNTEsNjMuNTctLjdaIi8+CiAgICA8cGF0aCBjbGFzcz0iY2xzLTEiIGQ9Ik0xODY0LjYzLDQyMi44MWMtMS4zMiwwLTQuMTItLjE5LTguNDQtLjU2LTQuMzEtLjM3LTcuNTktLjU2LTkuODQtLjU2cy01LjUzLjE5LTkuODQuNTZjLTQuMzIuMzgtNy4xMy41Ni04LjQ0LjU2LDIuMDYtMzQuNSwzLjEtNjguNzMsMy4xLTEwMi42NywwLTM5LjU2LTEuMDQtNzIuOTUtMy4xLTEwMC4xNCwxLjMyLDAsNC4xMi4xOSw4LjQ0LjU3LDQuMzEuMzgsNy41OS41Niw5Ljg0LjU2czUuNTMtLjE4LDkuODQtLjU2YzQuMzItLjM3LDcuMTMtLjU3LDguNDQtLjU3LTIuMDcsMjcuMTktMy4xLDYwLjU4LTMuMSwxMDAuMTQsMCwzMy45NCwxLjAzLDY4LjE3LDMuMSwxMDIuNjdaIi8+CiAgPC9nPgogIDxnPgogICAgPHBhdGggY2xhc3M9ImNscy0yIiBkPSJNNzIwLjg3LDUxNi4yN3YxNS40aC00LjY1di0xNS40bC0xNy44Mi0yOS4xNWg1LjAzbDE1LjI3LDI1LjAxLDE1LjI3LTI1LjAxaDQuNzFsLTE3LjgyLDI5LjE1WiIvPgogICAgPHBhdGggY2xhc3M9ImNscy0yIiBkPSJNNzU3Ljk0LDUyOS4wOWMtMy41OS0xLjk3LTYuMzktNC42OC04LjQtOC4xMS0yLjAyLTMuNDQtMy4wMi03LjMtMy4wMi0xMS41OHMxLTguMTUsMy4wMi0xMS41OGMyLjAxLTMuNDQsNC44MS02LjE0LDguNC04LjExLDMuNTgtMS45Nyw3LjU4LTIuOTYsMTEuOTktMi45NnM4LjM5Ljk3LDExLjkzLDIuOTNjMy41NCwxLjk1LDYuMzMsNC42Niw4LjM3LDguMTIsMi4wMywzLjQ1LDMuMDYsNy4zMywzLjA2LDExLjYxcy0xLjAyLDguMTYtMy4wNiwxMS42MWMtMi4wNCwzLjQ2LTQuODMsNi4xNi04LjM3LDguMTEtMy41NCwxLjk1LTcuNTIsMi45My0xMS45MywyLjkzcy04LjQxLS45OS0xMS45OS0yLjk2Wk03NzkuNDgsNTI1LjQ2YzIuODQtMS41OSw1LjA3LTMuOCw2LjY4LTYuNjIsMS42Mi0yLjgyLDIuNDItNS45NywyLjQyLTkuNDVzLS44LTYuNjMtMi40Mi05LjQ1Yy0xLjYxLTIuODItMy44NC01LjAyLTYuNjgtNi42Mi0yLjg0LTEuNTktNi4wMi0yLjM4LTkuNTQtMi4zOHMtNi43MS43OS05LjU3LDIuMzhjLTIuODYsMS42LTUuMTIsMy44LTYuNzUsNi42Mi0xLjYzLDIuODItMi40NSw1Ljk4LTIuNDUsOS40NXMuODIsNi42MywyLjQ1LDkuNDVjMS42MywyLjgyLDMuODgsNS4wMyw2Ljc1LDYuNjIsMi44NiwxLjU5LDYuMDUsMi4zOSw5LjU3LDIuMzlzNi43LS44LDkuNTQtMi4zOVoiLz4KICAgIDxwYXRoIGNsYXNzPSJjbHMtMiIgZD0iTTgxNC42Niw1MjcuMDhjLTMuMjMtMy4zMS00Ljg0LTguMTItNC44NC0xNC40NHYtMjUuNTJoNC43MXYyNS4zM2MwLDUuMTgsMS4xNyw5LjA0LDMuNSwxMS41OCwyLjM0LDIuNTUsNS43MSwzLjgyLDEwLjEyLDMuODJzNy44NS0xLjI3LDEwLjE4LTMuODJjMi4zNC0yLjU0LDMuNS02LjQsMy41LTExLjU4di0yNS4zM2g0LjU4djI1LjUyYzAsNi4zMi0xLjYxLDExLjEzLTQuODEsMTQuNDQtMy4yLDMuMzEtNy42OSw0Ljk3LTEzLjQ2LDQuOTdzLTEwLjI3LTEuNjYtMTMuNDktNC45N1oiLz4KICAgIDxwYXRoIGNsYXNzPSJjbHMtMiIgZD0iTTg5Ny4zOSw1MzEuNjdsLTEwLjE4LTE0LjMyYy0xLjE0LjEzLTIuMzMuMTktMy41Ni4xOWgtMTEuOTZ2MTQuMTNoLTQuNzF2LTQ0LjU1aDE2LjY3YzUuNjksMCwxMC4xNCwxLjM2LDEzLjM3LDQuMDgsMy4yMiwyLjcxLDQuODQsNi40NSw0Ljg0LDExLjIsMCwzLjQ3LS44OCw2LjQyLTIuNjQsOC44MS0xLjc2LDIuNC00LjI4LDQuMTMtNy41NCw1LjE5bDEwLjg4LDE1LjI3aC01LjE2Wk04OTMuNjQsNTEwLjZjMi4zMy0xLjk1LDMuNS00LjY5LDMuNS04LjIxcy0xLjE3LTYuMzctMy41LTguMzFjLTIuMzQtMS45My01LjcxLTIuODktMTAuMTItMi44OWgtMTEuODR2MjIuMzRoMTEuODRjNC40MSwwLDcuNzgtLjk3LDEwLjEyLTIuOTNaIi8+CiAgICA8cGF0aCBjbGFzcz0iY2xzLTIiIGQ9Ik05NzkuNjEsNDg3LjEydjQ0LjU1aC00LjY0di0yMC41NWgtMjcuODd2MjAuNTVoLTQuNzF2LTQ0LjU1aDQuNzF2MTkuODVoMjcuODd2LTE5Ljg1aDQuNjRaIi8+CiAgICA8cGF0aCBjbGFzcz0iY2xzLTIiIGQ9Ik0xMDMxLjk4LDUyNy42djQuMDdoLTMxLjV2LTQ0LjU1aDMwLjU0djQuMDhoLTI1Ljg0djE1Ljg1aDIzLjAzdjQuMDFoLTIzLjAzdjE2LjU1aDI2Ljc5WiIvPgogICAgPHBhdGggY2xhc3M9ImNscy0yIiBkPSJNMTA3Ny4zNSw1MTkuNzdoLTI0LjgybC01LjM0LDExLjloLTQuOWwyMC4zNi00NC41NWg0LjY1bDIwLjM2LDQ0LjU1aC00Ljk3bC01LjM0LTExLjlaTTEwNzUuNjMsNTE1Ljk1bC0xMC42OS0yMy45Mi0xMC42OSwyMy45MmgyMS4zOFoiLz4KICAgIDxwYXRoIGNsYXNzPSJjbHMtMiIgZD0iTTExMDEuNCw0ODcuMTJoNC43MXY0MC40OGgyNC45NXY0LjA3aC0yOS42NXYtNDQuNTVaIi8+CiAgICA8cGF0aCBjbGFzcz0iY2xzLTIiIGQ9Ik0xMTQ5Ljc3LDQ5MS4xOWgtMTUuNjZ2LTQuMDhoMzYuMDJ2NC4wOGgtMTUuNjZ2NDAuNDdoLTQuNzF2LTQwLjQ3WiIvPgogICAgPHBhdGggY2xhc3M9ImNscy0yIiBkPSJNMTIyMS4yMiw0ODcuMTJ2NDQuNTVoLTQuNjV2LTIwLjU1aC0yNy44N3YyMC41NWgtNC43MXYtNDQuNTVoNC43MXYxOS44NWgyNy44N3YtMTkuODVoNC42NVoiLz4KICAgIDxwYXRoIGNsYXNzPSJjbHMtMiIgZD0iTTEyNjUuMTMsNDg3LjEyaDQuNzF2NDQuNTVoLTQuNzF2LTQ0LjU1WiIvPgogICAgPHBhdGggY2xhc3M9ImNscy0yIiBkPSJNMTMyNy45NCw0ODcuMTJ2NDQuNTVoLTMuODdsLTI4LjY0LTM2LjE1djM2LjE1aC00Ljcxdi00NC41NWgzLjg4bDI4LjcsMzYuMTV2LTM2LjE1aDQuNjRaIi8+CiAgICA8cGF0aCBjbGFzcz0iY2xzLTIiIGQ9Ik0xMzg3LjEyLDUxNi4yN3YxNS40aC00LjY0di0xNS40bC0xNy44My0yOS4xNWg1LjAzbDE1LjI3LDI1LjAxLDE1LjI4LTI1LjAxaDQuNzFsLTE3LjgzLDI5LjE1WiIvPgogICAgPHBhdGggY2xhc3M9ImNscy0yIiBkPSJNMTQyNC4xOCw1MjkuMDljLTMuNTgtMS45Ny02LjM4LTQuNjgtOC40LTguMTEtMi4wMi0zLjQ0LTMuMDItNy4zLTMuMDItMTEuNThzMS04LjE1LDMuMDItMTEuNThjMi4wMi0zLjQ0LDQuODItNi4xNCw4LjQtOC4xMSwzLjU4LTEuOTcsNy41OC0yLjk2LDExLjk5LTIuOTZzOC4zOS45NywxMS45MywyLjkzYzMuNTQsMS45NSw2LjM0LDQuNjYsOC4zNyw4LjEyLDIuMDQsMy40NSwzLjA2LDcuMzMsMy4wNiwxMS42MXMtMS4wMiw4LjE2LTMuMDYsMTEuNjFjLTIuMDMsMy40Ni00LjgzLDYuMTYtOC4zNyw4LjExLTMuNTQsMS45NS03LjUyLDIuOTMtMTEuOTMsMi45M3MtOC40MS0uOTktMTEuOTktMi45NlpNMTQ0NS43Myw1MjUuNDZjMi44NC0xLjU5LDUuMDYtMy44LDYuNjgtNi42MiwxLjYyLTIuODIsMi40MS01Ljk3LDIuNDEtOS40NXMtLjgtNi42My0yLjQxLTkuNDVjLTEuNjItMi44Mi0zLjg0LTUuMDItNi42OC02LjYyLTIuODUtMS41OS02LjAzLTIuMzgtOS41NS0yLjM4cy02LjcxLjc5LTkuNTcsMi4zOGMtMi44NywxLjYtNS4xMiwzLjgtNi43NSw2LjYyLTEuNjMsMi44Mi0yLjQ0LDUuOTgtMi40NCw5LjQ1cy44Miw2LjYzLDIuNDQsOS40NWMxLjY0LDIuODIsMy44OCw1LjAzLDYuNzUsNi42MiwyLjg2LDEuNTksNi4wNSwyLjM5LDkuNTcsMi4zOXM2LjctLjgsOS41NS0yLjM5WiIvPgogICAgPHBhdGggY2xhc3M9ImNscy0yIiBkPSJNMTQ4MC45Miw1MjcuMDhjLTMuMjMtMy4zMS00Ljg0LTguMTItNC44NC0xNC40NHYtMjUuNTJoNC43djI1LjMzYzAsNS4xOCwxLjE3LDkuMDQsMy41LDExLjU4LDIuMzQsMi41NSw1LjcxLDMuODIsMTAuMTIsMy44MnM3Ljg1LTEuMjcsMTAuMTgtMy44MmMyLjM0LTIuNTQsMy41LTYuNCwzLjUtMTEuNTh2LTI1LjMzaDQuNTl2MjUuNTJjMCw2LjMyLTEuNiwxMS4xMy00LjgxLDE0LjQ0LTMuMjEsMy4zMS03LjcsNC45Ny0xMy40Niw0Ljk3cy0xMC4yNi0xLjY2LTEzLjQ5LTQuOTdaIi8+CiAgICA8cGF0aCBjbGFzcz0iY2xzLTIiIGQ9Ik0xNTYzLjY0LDUzMS42N2wtMTAuMTgtMTQuMzJjLTEuMTUuMTMtMi4zMy4xOS0zLjU2LjE5aC0xMS45NnYxNC4xM2gtNC43MXYtNDQuNTVoMTYuNjhjNS42OSwwLDEwLjE0LDEuMzYsMTMuMzYsNC4wOCwzLjIyLDIuNzEsNC44NCw2LjQ1LDQuODQsMTEuMiwwLDMuNDctLjg4LDYuNDItMi42NCw4LjgxLTEuNzYsMi40LTQuMjgsNC4xMy03LjU0LDUuMTlsMTAuODksMTUuMjdoLTUuMTZaTTE1NTkuODksNTEwLjZjMi4zMy0xLjk1LDMuNDktNC42OSwzLjQ5LTguMjFzLTEuMTYtNi4zNy0zLjQ5LTguMzFjLTIuMzQtMS45My01LjcxLTIuODktMTAuMTItMi44OWgtMTEuODR2MjIuMzRoMTEuODRjNC40MSwwLDcuNzgtLjk3LDEwLjEyLTIuOTNaIi8+CiAgICA8cGF0aCBjbGFzcz0iY2xzLTIiIGQ9Ik0xNjQ1Ljg2LDQ4Ny4xMnY0NC41NWgtNC42NXYtMjAuNTVoLTI3Ljg3djIwLjU1aC00Ljd2LTQ0LjU1aDQuN3YxOS44NWgyNy44N3YtMTkuODVoNC42NVoiLz4KICAgIDxwYXRoIGNsYXNzPSJjbHMtMiIgZD0iTTE2OTQuNjYsNTE5Ljc3aC0yNC44MmwtNS4zNCwxMS45aC00LjlsMjAuMzYtNDQuNTVoNC42NWwyMC4zNiw0NC41NWgtNC45N2wtNS4zNC0xMS45Wk0xNjkyLjk0LDUxNS45NWwtMTAuNjktMjMuOTItMTAuNjksMjMuOTJoMjEuMzhaIi8+CiAgICA8cGF0aCBjbGFzcz0iY2xzLTIiIGQ9Ik0xNzU1Ljk1LDQ4Ny4xMnY0NC41NWgtMy44OGwtMjguNjQtMzYuMTV2MzYuMTVoLTQuN3YtNDQuNTVoMy44N2wyOC43LDM2LjE1di0zNi4xNWg0LjY1WiIvPgogICAgPHBhdGggY2xhc3M9ImNscy0yIiBkPSJNMTc3Ni44Miw0ODcuMTJoMTguMTRjNC43MSwwLDguODcuOTUsMTIuNDcsMi44MywzLjYxLDEuODksNi40MSw0LjUyLDguNCw3Ljg5LDIsMy4zNywyLjk5LDcuMjMsMi45OSwxMS41NXMtLjk5LDguMTgtMi45OSwxMS41NWMtMS45OSwzLjM4LTQuNzksNi4wMS04LjQsNy44OS0zLjYsMS44OS03Ljc2LDIuODMtMTIuNDcsMi44M2gtMTguMTR2LTQ0LjU1Wk0xNzk0LjcsNTI3LjZjMy44OSwwLDcuMzEtLjc4LDEwLjI0LTIuMzMsMi45Mi0xLjU1LDUuMi0zLjY5LDYuODEtNi40MywxLjYyLTIuNzMsMi40Mi01Ljg5LDIuNDItOS40NXMtLjgxLTYuNzEtMi40Mi05LjQ1Yy0xLjYxLTIuNzMtMy44OC00Ljg4LTYuODEtNi40My0yLjkzLTEuNTUtNi4zNS0yLjMyLTEwLjI0LTIuMzJoLTEzLjE3djM2LjRoMTMuMTdaIi8+CiAgICA8cGF0aCBjbGFzcz0iY2xzLTIiIGQ9Ik0xODM4LjUxLDUzMC40NmMtMy4wMy0xLjA2LTUuMzctMi40Ni03LjAzLTQuMmwxLjg0LTMuNjNjMS42MSwxLjYyLDMuNzYsMi45Miw2LjQzLDMuOTEsMi42Ny45OSw1LjQzLDEuNSw4LjI2LDEuNSwzLjk5LDAsNi45OC0uNzQsOC45OC0yLjIsMS45OS0xLjQ3LDIuOTktMy4zNywyLjk5LTUuNywwLTEuNzgtLjU1LTMuMi0xLjYzLTQuMjYtMS4wOS0xLjA2LTIuNDEtMS44OC0zLjk4LTIuNDUtMS41Ny0uNTctMy43Ni0xLjItNi41Ni0xLjg4LTMuMzYtLjg1LTYuMDMtMS42Ni04LjAyLTIuNDUtMi0uNzktMy43MS0xLjk4LTUuMTMtMy41OS0xLjQyLTEuNjItMi4xMy0zLjgtMi4xMy02LjU2LDAtMi4yNS42LTQuMjksMS43OC02LjE0LDEuMTktMS44NCwzLjAxLTMuMzIsNS40OC00LjQyLDIuNDUtMS4xLDUuNTEtMS42NSw5LjE3LTEuNjUsMi41NCwwLDUuMDMuMzUsNy40OCwxLjA1LDIuNDMuNyw0LjU1LDEuNjcsNi4zMywyLjlsLTEuNTksMy43NWMtMS44Ni0xLjIzLTMuODYtMi4xNS01Ljk4LTIuNzctMi4xMi0uNjItNC4yLS45Mi02LjI0LS45Mi0zLjksMC02Ljg1Ljc1LTguODEsMi4yNi0xLjk4LDEuNTEtMi45NiwzLjQ1LTIuOTYsNS44MiwwLDEuNzguNTQsMy4yMiwxLjYzLDQuMywxLjA4LDEuMDgsMi40MywxLjkxLDQuMDcsMi40OCwxLjYzLjU3LDMuODIsMS4yLDYuNTksMS44OCwzLjI2LjgsNS45LDEuNiw3LjkyLDIuMzgsMi4wMS43OSwzLjcyLDEuOTcsNS4xMiwzLjU2LDEuNCwxLjU5LDIuMSwzLjc1LDIuMSw2LjQ2LDAsMi4yNS0uNiw0LjI5LTEuODEsNi4xNC0xLjIxLDEuODQtMy4wNywzLjMtNS41Nyw0LjM5LTIuNSwxLjA4LTUuNTcsMS42My05LjIzLDEuNjMtMy4zLDAtNi40Ny0uNTMtOS41MS0xLjU5WiIvPgogIDwvZz4KPC9zdmc+" alt="Shafi">
+  </div>
+
+  <!-- ==================== ARABIC ==================== -->
+  <div class="ar-content">
+    <h1 class="hero-text">طبيب في كل بيت</h1>
+    <p class="hero-sub">في كل لحظة صحية تمر بها أنت أو أحبّاؤك — من سؤال بسيط إلى قرار طبي معقد — نوصلك بأطباء أمريكيين معتمدين يراجعون حالتك شخصياً ويقدمون لك توجيهاً طبياً موثوقاً. بالعربية.</p>
+
+    <div class="cards">
+      <!-- Tier 1 -->
+      <div class="card">
+        <div class="card-badge badge-teal">ابدأ هنا</div>
+        <div class="card-price"><span>لكل سؤال</span> $39</div>
+        <div class="card-title">اسأل طبيب</div>
+        <div class="card-desc">وضوح وتوجيه طبي في اللحظات التي تحتاج فيها إلى إجابات — لك أو لأحد أحبّائك. أرسل سؤالك وسجلاتك، واحصل على إجابة موثقة من طبيب أمريكي معتمد.</div>
+        <ul class="card-list">
+          <li>طبيب أمريكي معتمد يراجع حالتك شخصياً</li>
+          <li>إجابة مكتوبة وموثقة بتوقيع الطبيب خلال ٢٤ ساعة</li>
+          <li>الذكاء الاصطناعي يحلل سجلاتك — الطبيب يتخذ القرار</li>
+          <li>سجلات من أي دولة وبأي لغة</li>
+          <li>متوفر بالعربية والإنجليزية</li>
+          <li>توجيه أولي وخطوات تالية واضحة</li>
+        </ul>
+        <a href="https://form.jotform.com/260296051801148" target="_blank" class="card-btn btn-teal">اسأل طبيب الآن ←</a>
+      </div>
+
+      <!-- Tier 2 -->
+      <div class="card">
+        <div class="card-badge badge-navy">استشارة شاملة</div>
+        <div class="card-price"><span>يبدأ من</span> $119</div>
+        <div class="card-title">استشارة عامة</div>
+        <div class="card-desc">استشارة فيديو مدتها ٢٠ دقيقة مع طبيب أمريكي معتمد. لمن يحتاج فهماً أعمق لحالته أو توجيهاً شاملاً من طبيب مختص.</div>
+        <ul class="card-list">
+          <li>كل ما في "اسأل طبيب"</li>
+          <li>استشارة فيديو ٢٠ دقيقة مع طبيب معتمد</li>
+          <li>مراجعة شاملة لحالتك وسجلاتك</li>
+          <li>توصيات مفصلة وخطة متابعة</li>
+          <li>تقرير مكتوب بالتوصيات</li>
+        </ul>
+        <a href="https://form.jotform.com/260296051801148" target="_blank" class="card-btn btn-navy">احجز استشارتك ←</a>
+      </div>
+
+      <!-- Tier 3 -->
+      <div class="card premium">
+        <div class="card-badge badge-gold">متميّز</div>
+        <div class="card-price"><span>يبدأ من</span> $300</div>
+        <div class="card-title">استشارة أخصائي</div>
+        <div class="card-desc">استشارة فيديو مع أخصائي أمريكي معتمد تم اختياره بعناية ليتوافق مع حالتك. للحالات المعقدة التي تحتاج خبرة متعمقة في مجال محدد.</div>
+        <ul class="card-list">
+          <li>كل ما في "اسأل طبيب"</li>
+          <li>استشارة فيديو ٣٠ دقيقة مع الأخصائي</li>
+          <li>أخصائي مختار بعناية ليتوافق مع حالتك</li>
+          <li>تقرير مكتوب شامل مع التوصيات</li>
+          <li>سجل طبي موحد وكامل</li>
+          <li>خطة علاج والخطوات التالية</li>
+        </ul>
+        <a href="https://form.jotform.com/260296051801148" target="_blank" class="card-btn btn-gold">احجز مع أخصائي ←</a>
+      </div>
+    </div>
+
+    <div class="credit-note">
+      <strong>ابدأ بـ"اسأل طبيب" ويمكنك الترقية في أي وقت</strong> — معظم مرضانا يحصلون على ما يحتاجونه من الإجابة المكتوبة. وإذا أردت لاحقاً استشارة كاملة، ادفع الفرق فقط: مثلاً الاستشارة الطبية العامة ($119) ستكلفك $80 إضافية فقط.
+    </div>
+
+    <div class="credit-note" style="background: #FEF9EF; border: 1px solid #F0DDB0;">
+      <strong>💰 ضمان استرداد الأموال:</strong> إذا لم تكن راضياً عن الخدمة، سنقوم بإعادة المبلغ كاملاً. ثقتك ورضاك هما أولويتنا.
+    </div>
+
+    <div class="not-sure">
+      <strong>غير متأكد من أين تبدأ؟</strong> ابدأ بـ"اسأل طبيب". سيراجع الطبيب حالتك ويوجهك للخطوة المناسبة — سواء كانت إجابة كافية أو استشارة متخصصة.
+    </div>
+
+    <div class="talk-cta">
+      <a href="https://form.jotform.com/260296051801148" class="talk-cta-btn" target="_blank">تحدث مع فريقنا أولاً ←</a>
+    </div>
+    <div class="talk-cta-sub">لست متأكداً من أين تبدأ؟ تحدث معنا وسنساعدك في اختيار الخدمة المناسبة لحالتك. بدون أي التزام.</div>
+
+    <div class="trust-row">
+      <div class="trust-item"><span class="trust-icon">🩺</span> جميع الأطباء حاصلون على البورد الأمريكي</div>
+      <div class="trust-item"><span class="trust-icon">🔒</span> آمن ومتوافق مع معايير HIPAA</div>
+      <div class="trust-item"><span class="trust-icon">💻</span> جميع الاستشارات افتراضية</div>
+      <div class="trust-item"><span class="trust-icon">🌍</span> عربي وإنجليزي</div>
+      <div class="trust-item"><span class="trust-icon">⚡</span> النتائج خلال ٢٤ ساعة</div>
+      <div class="trust-item"><a href="https://doctors.shafi.io" target="_blank" style="color:var(--teal);text-decoration:none;font-weight:600;display:flex;align-items:center;gap:6px"><span class="trust-icon">👨‍⚕️</span> تصفح أطباءنا</a></div>
+    </div>
+
+    <h2 class="section-title">كيف تعمل الخدمة؟</h2>
+    <p class="section-sub">ثلاث خطوات بسيطة للحصول على توجيه طبي موثوق.</p>
+
+    <div class="steps-grid">
+      <div class="step-card">
+        <div class="step-num">١</div>
+        <h3>أرسل سؤالك</h3>
+        <p>صف مشكلتك الطبية وأرسل أي سجلات متوفرة — بأي لغة ومن أي دولة.</p>
+      </div>
+      <div class="step-card">
+        <div class="step-num">٢</div>
+        <h3>طبيبك يراجع حالتك</h3>
+        <p>يستخدم الطبيب الذكاء الاصطناعي لتحليل سجلاتك، ثم يراجع كل شيء شخصياً ويعد إجابتك بخبرته الطبية.</p>
+      </div>
+      <div class="step-card">
+        <div class="step-num">٣</div>
+        <h3>تحصل على إجابتك</h3>
+        <p>تتلقى تقييماً مكتوباً وموثقاً خلال ٢٤ ساعة. إذا كنت بحاجة لاستشارة، نوصلك بالأخصائي المناسب.</p>
+      </div>
+    </div>
+
+    <h2 class="section-title">أسئلة شائعة</h2>
+    <p class="section-sub">إجابات على الأسئلة الأكثر شيوعاً.</p>
+
+    <div class="faq-item">
+      <div class="faq-q">هل الأطباء حقيقيون؟</div>
+      <div class="faq-a">نعم. كل تقييم يأتي باسم الطبيب الكامل ومؤهلاته وشهادة البورد الأمريكي. أطباؤنا أطباء ممارسون في الولايات المتحدة.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">هل يمكنني إرسال سجلات بالعربية؟</div>
+      <div class="faq-a">بالتأكيد. نظامنا يعالج السجلات الطبية بأي لغة ومن أي دولة. حتى صور من هاتفك.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">ما الفرق بين التقييم والاستشارات؟</div>
+      <div class="faq-a">"اسأل طبيب" ($39) هو إجابة مكتوبة وموثقة من طبيب معتمد على سؤالك مع توجيه أولي. الاستشارة العامة ($119) تشمل استشارة فيديو ٢٠ دقيقة مع طبيب معتمد. استشارة الأخصائي ($300+) تشمل مكالمة فيديو ٣٠ دقيقة مع أخصائي مختار بعناية لحالتك. إذا بدأت بـ"اسأل طبيب" وقررت الترقية، يُحسب المبلغ من سعر الاستشارة.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">ماذا لو احتجت استشارة بعد التقييم؟</div>
+      <div class="faq-a">إذا دفعت $39 للتقييم ثم قررت أنك بحاجة لاستشارة، يُحسب مبلغ التقييم من سعر الاستشارة. فمثلاً، الاستشارة العامة ستكلفك $80 إضافية فقط بدلاً من $119.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">هل معلوماتي آمنة؟</div>
+      <div class="faq-a">خصوصيتك أولويتنا. جميع البيانات مشفرة ونلتزم بمعايير HIPAA الأمريكية. لا نشارك بياناتك مع أي طرف ثالث.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">كم يستغرق الحصول على التقييم؟</div>
+      <div class="faq-a">عادةً خلال ٢٤ ساعة من استلام سجلاتك ودفعتك.</div>
+    </div>
+
+
+    <div class="not-sure" style="background: #FFF5F5; border: 1px solid #FDD; color: #8B0000; margin-top: 24px;">
+      <strong>⚠️ تنبيه مهم:</strong> شافي ليست خدمة طوارئ. إذا كنت تعاني من حالة طبية طارئة أو عاجلة، يرجى التوجه إلى أقرب مستشفى أو الاتصال بخدمات الطوارئ المحلية فوراً.
+    </div>
+
+    <div class="cta-box">
+      <h2>طبيب في كل بيت</h2>
+      <p>ابدأ رحلتك الصحية مع تقييم طبي موثوق من طبيب أمريكي معتمد. بالعربية. خلال ٢٤ ساعة.</p>
+      <a href="https://form.jotform.com/260296051801148" class="cta-btn">ابدأ الآن — $39</a>
+    </div>
+  </div>
+
+  <!-- ==================== ENGLISH ==================== -->
+  <div class="en-content">
+    <h1 class="hero-text">A Doctor in Every Home</h1>
+    <p class="hero-sub">For every health moment you or your loved ones face — from a simple question to a complex medical decision — we connect you with US board-certified doctors who personally review your case and provide trusted medical guidance. In Arabic.</p>
+
+    <div class="cards">
+      <!-- Tier 1 -->
+      <div class="card">
+        <div class="card-badge badge-teal">Start Here</div>
+        <div class="card-price">$39 <span>per question</span></div>
+        <div class="card-title">Ask a Doctor</div>
+        <div class="card-desc">Clarity and medical direction for the moments when you need answers — for you or a loved one. Submit your question and records, and receive a written, doctor-verified answer from a US board-certified physician.</div>
+        <ul class="card-list">
+          <li>US board-certified doctor personally reviews your case</li>
+          <li>Written, doctor-signed answer within 24 hours</li>
+          <li>AI synthesizes your records — the doctor makes the call</li>
+          <li>Records from any country, in any language</li>
+          <li>Available in Arabic and English</li>
+          <li>Clear initial direction and next steps</li>
+        </ul>
+        <a href="https://form.jotform.com/260296051801148" target="_blank" class="card-btn btn-teal">Ask a Doctor →</a>
+      </div>
+
+      <!-- Tier 2 -->
+      <div class="card">
+        <div class="card-badge badge-navy">Full Consultation</div>
+        <div class="card-price">$119 <span>starting price</span></div>
+        <div class="card-title">General Consultation</div>
+        <div class="card-desc">A 20-minute video consultation with a US board-certified doctor. For those who need a deeper understanding of their condition or comprehensive guidance from a qualified physician.</div>
+        <ul class="card-list">
+          <li>Everything in Ask a Doctor</li>
+          <li>20-minute video consultation with a board-certified doctor</li>
+          <li>Comprehensive review of your case and records</li>
+          <li>Detailed recommendations and follow-up plan</li>
+          <li>Written report with recommendations</li>
+        </ul>
+        <a href="https://form.jotform.com/260296051801148" target="_blank" class="card-btn btn-navy">Book Your Consultation →</a>
+      </div>
+
+      <!-- Tier 3 -->
+      <div class="card premium">
+        <div class="card-badge badge-gold">Premium</div>
+        <div class="card-price">$300 <span>starting price</span></div>
+        <div class="card-title">Specialist Consultation</div>
+        <div class="card-desc">A 30-minute video consultation with a US board-certified specialist hand-picked to match the expertise your case requires. For complex cases requiring deep subspecialty knowledge.</div>
+        <ul class="card-list">
+          <li>Everything in Ask a Doctor</li>
+          <li>30-minute video consultation with specialist</li>
+          <li>Specialist hand-picked to match your condition</li>
+          <li>Comprehensive written report with recommendations</li>
+          <li>Complete synthesized medical record</li>
+          <li>Treatment plan and next steps</li>
+        </ul>
+        <a href="https://form.jotform.com/260296051801148" target="_blank" class="card-btn btn-gold">Book a Specialist →</a>
+      </div>
+    </div>
+
+    <div class="credit-note">
+      <strong>Start with Ask a Doctor and upgrade anytime</strong> — most patients get the clarity they need from the written answer. If you later want a full consultation, just pay the difference: for example, the General Medical Consultation ($119) would only cost you $80 more.
+    </div>
+
+    <div class="credit-note" style="background: #FEF9EF; border: 1px solid #F0DDB0;">
+      <strong>💰 Money-Back Guarantee:</strong> If you are not satisfied with the service, you will receive a full refund. Your trust and satisfaction are our top priority.
+    </div>
+
+    <div class="not-sure">
+      <strong>Not sure where to start?</strong> Start with Ask a Doctor. Your doctor will review your case and guide you to the right next step — whether that's a clear answer or a consultation.
+    </div>
+
+    <div class="talk-cta">
+      <a href="https://form.jotform.com/260296051801148" class="talk-cta-btn" target="_blank">Talk to Our Team First →</a>
+    </div>
+    <div class="talk-cta-sub">Not sure where to start? Talk to us and we'll help you choose the right service for your situation. No commitment required.</div>
+
+    <div class="trust-row">
+      <div class="trust-item"><span class="trust-icon">🩺</span> All Doctors US-Trained & Board-Certified</div>
+      <div class="trust-item"><span class="trust-icon">🔒</span> HIPAA-Compliant & Secure</div>
+      <div class="trust-item"><span class="trust-icon">💻</span> All Consultations Are Virtual</div>
+      <div class="trust-item"><span class="trust-icon">🌍</span> Arabic & English</div>
+      <div class="trust-item"><span class="trust-icon">⚡</span> Results Within 24 Hours</div>
+      <div class="trust-item"><a href="https://doctors.shafi.io" target="_blank" style="color:var(--teal);text-decoration:none;font-weight:600;display:flex;align-items:center;gap:6px"><span class="trust-icon">👨‍⚕️</span> Browse Our Doctors</a></div>
+    </div>
+
+    <h2 class="section-title">How It Works</h2>
+    <p class="section-sub">Three simple steps to get trusted medical guidance.</p>
+
+    <div class="steps-grid">
+      <div class="step-card">
+        <div class="step-num">1</div>
+        <h3>Submit Your Question</h3>
+        <p>Describe your medical concern and upload any records — in any language, from any country.</p>
+      </div>
+      <div class="step-card">
+        <div class="step-num">2</div>
+        <h3>Your Doctor Reviews Your Case</h3>
+        <p>Your doctor uses AI to synthesize your records, then personally reviews everything and prepares your answer with their medical expertise.</p>
+      </div>
+      <div class="step-card">
+        <div class="step-num">3</div>
+        <h3>Get Your Answer</h3>
+        <p>Receive a written, verified assessment within 24 hours. If you need a consultation, we'll connect you with the right doctor.</p>
+      </div>
+    </div>
+
+    <h2 class="section-title">Frequently Asked Questions</h2>
+    <p class="section-sub">Answers to the most common questions from our patients.</p>
+
+    <div class="faq-item">
+      <div class="faq-q">Are the doctors real?</div>
+      <div class="faq-a">Yes. Every evaluation comes with the doctor's full name, credentials, and board certification. Our doctors are practicing US physicians.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">Can I send records in Arabic?</div>
+      <div class="faq-a">Absolutely. Our AI processes medical records in any language and from any country. Even photos from your phone.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">What's the difference between the three options?</div>
+      <div class="faq-a">Ask a Doctor ($39) is a written, doctor-verified answer to your question with initial direction. The General Consultation ($119) includes a 20-minute video consultation with a doctor for deeper guidance. The Specialist Consultation ($300+) is a 30-minute video call with a specialist hand-picked for your condition. If you start with Ask a Doctor and upgrade, your $39 is credited toward the consultation price.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">What if I need a consultation after the evaluation?</div>
+      <div class="faq-a">If you paid $39 for Ask a Doctor and decide you need a consultation, the $39 is credited toward the price. For example, the General Consultation would cost you only $80 more instead of $119.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">Is my information secure?</div>
+      <div class="faq-a">Your privacy is our top priority. All data is encrypted and we comply with US HIPAA standards. We never share your data with third parties.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">How long does it take to get the evaluation?</div>
+      <div class="faq-a">Typically within 24 hours of receiving your records and payment.</div>
+    </div>
+
+
+    <div class="not-sure" style="background: #FFF5F5; border: 1px solid #FDD; color: #8B0000; margin-top: 24px;">
+      <strong>⚠️ Important Notice:</strong> Shafi is not an emergency service. If you are experiencing a medical emergency or urgent situation, please go to your nearest hospital or call local emergency services immediately.
+    </div>
+
+    <div class="cta-box">
+      <h2>A Doctor in Every Home</h2>
+      <p>Start your health journey with a trusted medical evaluation from a US board-certified doctor. In Arabic. Within 24 hours.</p>
+      <a href="https://form.jotform.com/260296051801148" class="cta-btn">Get Started — $39</a>
+    </div>
+  </div>
+
+</div>
+
+<a href="https://wa.me/YOUR_NUMBER" class="whatsapp-float" target="_blank" rel="noopener">💬</a>
+
+<script>
+function setLang(lang) {
+  const body = document.body;
+  const html = document.documentElement;
+  const btns = document.querySelectorAll('.lang-btn');
+  if (lang === 'en') {
+    body.className = 'en';
+    html.setAttribute('lang', 'en');
+    html.setAttribute('dir', 'ltr');
+    btns[0].classList.add('active');
+    btns[1].classList.remove('active');
+  } else {
+    body.className = 'ar';
+    html.setAttribute('lang', 'ar');
+    html.setAttribute('dir', 'rtl');
+    btns[0].classList.remove('active');
+    btns[1].classList.add('active');
+  }
+}
+</script>
+</body>
+</html>
